@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+
+{% block content %}
+  {% image page.logo fill-800x800 %}
+
+{% endblock content %}
