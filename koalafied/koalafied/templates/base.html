@@ -27,10 +27,12 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-
+        <div class='content'>
         {% block content %}{% endblock %}
+        </div>
 
         {# Global javascript #}
+        <script src="{% static 'js/node_modules/chart.js/dist/Chart.js'%}"></script>
         <script type="text/javascript" src="{% static 'js/koalafied.js' %}"></script>
 
         {% block extra_js %}
