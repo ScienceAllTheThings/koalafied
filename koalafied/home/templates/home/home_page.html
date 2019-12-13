@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+
+{% block content %}
+  
+
+  {% image page.logo original as logo_img%}
+  <a href='./dashboard' ><img src="{{logo_img.url}}" class='hero-img' /></a>
+
+{% endblock content %}

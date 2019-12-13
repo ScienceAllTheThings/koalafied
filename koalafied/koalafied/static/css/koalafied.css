@@ -1,0 +1,41 @@
+.content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 100%;
+  border: solid black 1px;
+  text-align: center;
+}
+.hero-img {
+  width: 900px;
+}
+
+.status {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.status h2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 46pt;
+}
+
+.status.offline {
+  background-color: grey;
+}
+
+.status.good {
+  background-color: green;
+}
+
+.status.error {
+  background-color: red;
+}
