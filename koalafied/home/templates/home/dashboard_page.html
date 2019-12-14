@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class='dashboard-wrapper'>
+    <div class='dashboard-status'>
+      {% for t in turbines %}
+        <div class='status-wrapper' data-turbine={{t.id}}>
+        </div>
+        <div class='chart' data-turbine={{t.id}}>
+        </div>
+      {% endfor %}
+    </div>
+    <div class='dashboard-map' id='dashboard-map'>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function(){
+
+    function update() {
+      console.log('doing things');
+
+      $('.status-wrapper').each(function(i, obj) {
+        t = $(obj).data('turbine');
+        console.log(t)
+        $(obj).load('../get-turbine-status/?output=html&turbine='+t);
+      })
+      $('.chart').each(function(i, obj) {
+        console.log(obj)
+        t = $(obj).data('turbine');
+        $(obj).load('../chart/?turbine='+t);
+      })
+    }
+    update();
+    t = setInterval(update, 2000);
+
+  })
+
+  function initMap() {
+      // The location of Uluru
+      var uluru = {lat: -25.344, lng: 131.036};
+      // The map, centered at Uluru
+      var map = new google.maps.Map(
+          document.getElementById('dashboard-map'), {zoom: 4, center: uluru});
+      // The marker, positioned at Uluru
+      var marker = new google.maps.Marker({position: uluru, map: map});
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx6lnTFdoizlDdC8XKzTEPcVSuaBLWMU0&callback=initMap">
+    </script>
+{% endblock %}
