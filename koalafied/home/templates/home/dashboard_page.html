@@ -18,32 +18,58 @@
   $(document).ready(function(){
 
     function update() {
-      console.log('doing things');
 
       $('.status-wrapper').each(function(i, obj) {
-        t = $(obj).data('turbine');
-        console.log(t)
-        $(obj).load('../get-turbine-status/?output=html&turbine='+t);
+        var t = $(obj).data('turbine');
+
+        if (t !== undefined) {
+          $(obj).load('../get-turbine-status/?output=html&turbine='+t);
+          $.get('../get-turbine-status/?turbine='+t, function(data) {
+            var status = data.status;
+            console.log(t);
+            markers['turbine'+t].setIcon(statusColors[status]);
+          });
+        }
       })
       $('.chart').each(function(i, obj) {
-        console.log(obj)
-        t = $(obj).data('turbine');
-        $(obj).load('../chart/?turbine='+t);
+
+        var t = $(obj).data('turbine');
+        if (t !== undefined){
+          $(obj).load('../chart/?turbine='+t);
+        }
       })
     }
     update();
-    t = setInterval(update, 2000);
+    timer = setInterval(update, 2000);
 
   })
 
+  let colorUrls = {red: 'http://maps.google.com/mapfiles/kml/paddle/red-blank.png',
+                   green: 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png',
+                  gray: 'http://maps.google.com/mapfiles/kml/paddle/wht-blank.png'}
+
+  let statusColors = {offline: colorUrls.gray,
+                      good: colorUrls.green,
+                    error: colorUrls.red}
+
+  let markers = {};
+  let map;
+
+
   function initMap() {
       // The location of Uluru
-      var uluru = {lat: -25.344, lng: 131.036};
+      var turbine1 = {lat: 45.590131, lng: -120.012017};
+      var turbine2 = {lat: 45.588174, lng: -120.011003};
+      var center = {lat:45.589275, lng:-120.011673};
+
       // The map, centered at Uluru
-      var map = new google.maps.Map(
-          document.getElementById('dashboard-map'), {zoom: 4, center: uluru});
+      map = new google.maps.Map(
+          document.getElementById('dashboard-map'), {zoom: 17, center: center, mapTypeId: 'satellite'});
       // The marker, positioned at Uluru
-      var marker = new google.maps.Marker({position: uluru, map: map});
+      var marker1 = new google.maps.Marker({position: turbine1, map: map, icon: {url: colorUrls.gray}});
+      var marker2 = new google.maps.Marker({position: turbine2, map: map, icon: {url: colorUrls.gray}});
+      markers['turbine1'] = marker1;
+      markers['turbine2'] = marker2;
     }
   </script>
   <script async defer
