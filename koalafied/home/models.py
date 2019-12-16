@@ -62,7 +62,7 @@ class Turbine(models.Model):
     def get_audio(self, timeframe=1):
         now = datetime.datetime.now()
         start = now - datetime.timedelta(minutes=timeframe)
-        self.clean()
+        self.clean(timeframe=1)
         return Audio.objects.filter(turbine=self).filter(datetime__gte=start)[:8000]
 
     def clean(self, timeframe=5):
