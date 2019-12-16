@@ -87,7 +87,7 @@ class Turbine(models.Model):
         anomaly_events = self.get_anomaly_events(timeframe=timeframe)
 
         #TODO: Decide between count or percentage
-        if len(anomaly_events)/len(audio) >= 0.015:
+        if len(anomaly_events)/len(audio) >= 0.007:
             self.status = 'error'
             self.save()
             return self.status
