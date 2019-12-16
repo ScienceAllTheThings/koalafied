@@ -62,8 +62,14 @@ class Turbine(models.Model):
     def get_audio(self, timeframe=1):
         now = datetime.datetime.now()
         start = now - datetime.timedelta(minutes=timeframe)
+        self.clean()
+        return Audio.objects.filter(turbine=self).filter(datetime__gte=start)[8000]
 
-        return Audio.objects.filter(turbine=self).filter(datetime__gte=start)
+    def clean(self, timeframe=5):
+        now = datetime.datetime.now()
+        start = now - datetime.timedelta(minutes=timeframe)
+
+        Audio.objects.filter(turbine=self).filter(datetime__lt=start).delete()
 
     def get_anomaly_events(self, timeframe=1):
         return AnomalyEvents.objects.filter(audio__in=self.get_audio(timeframe=timeframe)).all()
