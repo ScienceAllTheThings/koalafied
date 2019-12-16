@@ -162,7 +162,7 @@ class GetChartPage(Page):
             turbine = Turbine.objects.get(pk=turbine)
 
             audio = list(turbine.get_audio(timeframe=5).values_list('value', flat=True))
-            anomalies = turbine.get_anomaly_events(timeframe=5)
+            anomalies = turbine.get_anomaly_events(timeframe=1)
             anomalies = [x.audio.value for x in anomalies]
             anomalies = [i for i, x in enumerate(audio) if x in anomalies]
             context = super().get_context(request)
